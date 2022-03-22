@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", HandleGetVideos)
+	http.HandleFunc("/", Hello)
 	http.ListenAndServe(":8080", nil)
 }
 
-func HandleGetVideos(w http.ResponseWriter, r *http.Request) {
+func Hello(w http.ResponseWriter, r *http.Request) {
 
 	for header, value := range r.Header {
 		fmt.Printf("Key: %v \t Value: %v \n", header, value)
@@ -18,5 +18,5 @@ func HandleGetVideos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("TestHeader", "TestValue")
-	w.Write([]byte("HandleGetVideos!"))
+	w.Write([]byte("Hello!"))
 }
