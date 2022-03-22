@@ -1,22 +1,33 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"net/http"
+	"encoding/json"
 )
 
 func main() {
-	http.HandleFunc("/", Hello)
+	http.HandleFunc("/", HandleGetVideos)
 	http.ListenAndServe(":8080", nil)
 }
 
-func Hello(w http.ResponseWriter, r *http.Request) {
+func HandleGetVideos(w http.ResponseWriter, r *http.Request) {
 
-	for header, value := range r.Header {
-		fmt.Printf("Key: %v \t Value: %v \n", header, value)
+	videos := getVideos()
 
+	videoBytes, err := json.Marshal(videos)
+
+	if err != nil {
+		panic(err)
 	}
 
-	w.Header().Add("TestHeader", "TestValue")
-	w.Write([]byte("Hello!"))
+	w.Write(videoBytes)
+
+	// for header, value := range r.Header {
+	// 	fmt.Printf("Key: %v \t Value: %v \n", header, value)
+
+	// }
+
+	// w.Header().Add("TestHeader", "TestValue")
+	// w.Write([]byte("Hello!"))
 }
